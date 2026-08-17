@@ -11,30 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
   openBtn.addEventListener('click', () => {
     cover.classList.add('fade-out');
 
-    // mulai musik otomatis karena diinisiasi dari klik user
-    bgMusic.play().catch(() => {
-      // jika tetap diblokir browser, tombol manual tetap tersedia
-    });
-    toggleMusicBtn.hidden = false;
+    if (bgMusic) {
+      bgMusic.play().catch(() => {});
+    }
+    if (toggleMusicBtn) toggleMusicBtn.hidden = false;
 
     setTimeout(() => {
       cover.hidden = true;
-      cover.style.display = 'none'; // paksa hilang dari flow
+      cover.style.display = 'none';
       mainContent.hidden = false;
       profilSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 800);
   });
 
   // ===== TOGGLE MUSIK =====
-  toggleMusicBtn.addEventListener('click', () => {
-    if (bgMusic.paused) {
-      bgMusic.play();
-      musicIcon.textContent = 'music_note';
-    } else {
-      bgMusic.pause();
-      musicIcon.textContent = 'music_off';
-    }
-  });
+  if (toggleMusicBtn && bgMusic) {
+    toggleMusicBtn.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicIcon.textContent = 'music_note';
+      } else {
+        bgMusic.pause();
+        musicIcon.textContent = 'music_off';
+      }
+    });
+  }
 
   // ===== COUNTDOWN =====
   const targetDate = new Date('2026-08-26T00:00:00+07:00').getTime();
@@ -73,4 +74,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateCountdown();
   const countdownInterval = setInterval(updateCountdown, 1000);
+
+  // ===== TANDA KASIH =====
+  const giftToggle = document.getElementById('giftToggle');
+  const giftDetail = document.getElementById('giftDetail');
+  const copyRekBtn = document.getElementById('copyRek');
+  const rekNumber = document.getElementById('rekNumber');
+
+  if (giftToggle && giftDetail) {
+    giftToggle.addEventListener('click', () => {
+      const isHidden = giftDetail.hidden;
+      giftDetail.hidden = !isHidden;
+      giftToggle.setAttribute('aria-expanded', String(isHidden));
+    });
+  }
+
+  if (copyRekBtn && rekNumber) {
+    copyRekBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(rekNumber.textContent.trim()).then(() => {
+        const originalHTML = copyRekBtn.innerHTML;
+        copyRekBtn.classList.add('copied');
+        copyRekBtn.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">check</span> Tersalin';
+        setTimeout(() => {
+          copyRekBtn.innerHTML = originalHTML;
+          copyRekBtn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  }
 });

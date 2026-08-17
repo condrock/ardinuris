@@ -415,3 +415,67 @@ img {
         transform: rotate(360deg);
     }
 }
+
+/* ===== TANDA KASIH ===== */
+.gift-toggle-wrapper {
+    text-align: center;
+    margin-top: 28px;
+}
+
+.gift-toggle-btn {
+    margin-top: 0;
+}
+
+.gift-detail {
+    margin-top: 20px;
+    animation: fadeSlide 0.4s ease;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.gift-card {
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.gift-owner {
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
+    margin-top: 4px;
+}
+
+.btn-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 8px 18px;
+    border: 1px solid var(--color-gold-light);
+    background: transparent;
+    color: var(--color-blue);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-copy:hover {
+    background: var(--color-bg-alt);
+}
+
+.btn-copy.copied {
+    background: var(--color-blue);
+    color: #fff;
+    border-color: var(--color-blue);
+}
